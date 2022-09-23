@@ -1,0 +1,29 @@
+# Importing the required libraries
+import xml.etree.ElementTree as Xet
+import pandas as pd
+
+cols = ["NtnlCcy", "CmmdtyDerivInd", "ClssfctnTp", "FullNm", "Id", "Issr"]
+rows = []
+
+# Parsing the XML file
+xmlparse = Xet.parse('C:\Users\user\Desktop\DLTINS_20210118_01of01.xml')
+root = xmlparse.getroot()
+for i in root:
+    NtnlCcy = i.find("NtnlCcy").text
+    CmmdtyDerivInd = i.find("CmmdtyDerivInd").text
+    ClssfctnTp = i.find("ClssfctnTp").text
+    FullNm = i.find("FullNm").text
+    Id = i.find("Id").text
+    Issr = i.find("Issr").text
+
+    rows.append({"NtnlCcy": NtnlCcy,
+                 "CmmdtyDerivInd": CmmdtyDerivInd,
+                 "ClssfctnTp": ClssfctnTp,
+                 "FullNm": FullNm,
+                 "Id": Id
+                 "Issr": Issr})
+
+df = pd.DataFrame(rows, columns=cols)
+
+# Writing dataframe to csv
+df.to_csv('C:\Users\user\Desktop\super.csv')
